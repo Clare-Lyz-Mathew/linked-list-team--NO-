@@ -1,22 +1,51 @@
-
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(int argc, char* argv[]) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-        return -1;
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Insert- end
+void insert(struct Node** head, int data) {
+    struct Node* newNode = createNode(data);
+    if (*head == NULL) {
+        *head = newNode;
+        return;
     }
-
-    SDL_Window* window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
-    
-    if (!window) {
-        printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        return -1;
+    struct Node* temp = *head;
+    while (temp->next != NULL) {
+        temp = temp->next;
     }
+    temp->next = newNode;
+}
 
-    SDL_Delay(3000);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    
+void display(struct Node* head) {
+    printf("Roll Numbers in Linked List: ");
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d", temp->data);
+        if (temp->next != NULL)
+            printf(" → ");
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    insert(&head, 101);
+    insert(&head, 102);
+    insert(&head, 103);
+    insert(&head, 104);
+    display(head);
+
     return 0;
 }
