@@ -39,6 +39,22 @@ void display(struct Node* head) {
     printf("\n");
 }
 
+// Search
+void search(struct Node* head, int rollNo) {
+    struct Node* temp = head;
+    int position = 1;
+    while (temp != NULL) {
+        if (temp->data == rollNo) {
+            printf("Roll number %d found at position %d in the list.\n", rollNo, position);
+            return;
+        }
+        temp = temp->next;
+        position++;
+    }
+    printf("Roll number %d not found in the list.\n", rollNo);
+}
+
+
 int main() {
     struct Node* head = NULL;
     insert(&head, 101);
@@ -49,3 +65,4 @@ int main() {
 
     return 0;
 }
+
